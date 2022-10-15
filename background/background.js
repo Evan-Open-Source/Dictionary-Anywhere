@@ -5,9 +5,10 @@ const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize',
     };
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    const { word, lang } = request, 
+    const { word, lang } = request,
         url = `https://www.google.com/search?hl=${lang}&q=define+${word}&gl=US`;
-    
+
+
     fetch(url, { 
             method: 'GET',
             credentials: 'omit'
@@ -21,15 +22,18 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             content && browser.storage.local.get().then((results) => {
                 let history = results.history || DEFAULT_HISTORY_SETTING;
-        
+
                 history.enabled && saveWord(content)
             });
         })
+
+
 
     return true;
 });
 
 function extractMeaning (document, context) {
+
     if (!document.querySelector("[data-dobid='hdw']")) { return null; }
     
     var word = document.querySelector("[data-dobid='hdw']").textContent,
@@ -67,17 +71,26 @@ function extractMeaning (document, context) {
         audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
     }
 
+
+
     return { word: word, meaning: meaning, audioSrc: audioSrc };
 };
 
 function saveWord (content) {
     let word = content.word,
         meaning = content.meaning,
-      
-        storageItem = browser.storage.local.get('definitions');
+        storageItem = browser.storage.local.get();
 
         storageItem.then((results) => {
             let definitions = results.definitions || {};
+            let slackURL = results.slack || 'http://localhost:3000';
+
+            if (!definitions[word]) {
+                fetch(slackURL, {
+                    method: 'POST',
+                    body: JSON.stringify({text: 'test?'})
+                }).then(test => test.json()).then(data => console.log(data))
+            }
 
             definitions[word] = meaning;
             browser.storage.local.set({

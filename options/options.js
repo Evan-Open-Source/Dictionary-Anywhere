@@ -27,7 +27,8 @@ function saveOptions(e) {
         },
         history: {
             enabled: document.querySelector("#store-history-checkbox").checked
-        }
+        },
+        slack: document.querySelector("#user-slack-url").value
     }).then(showSaveStatusAnimation);
 
     e.preventDefault();
@@ -40,7 +41,8 @@ function saveOptions(e) {
         let language = results.language,
             interaction = results.interaction || {},
             history = results.history || { enabled: IS_HISTORY_ENABLED_BY_DEFAULT },
-            definitions = results.definitions || {};
+            definitions = results.definitions || {},
+            slackURL = results.slack;
         
         // language
         document.querySelector("#language-selector").value = language || DEFAULT_LANGUAGE;
@@ -55,6 +57,9 @@ function saveOptions(e) {
         // history
         document.querySelector("#store-history-checkbox").checked = history.enabled;
         document.querySelector("#num-words-in-history").innerText = Object.keys(definitions).length;
+
+      document.querySelector("#user-slack-url").value = slackURL;
+
     });
   }
   
@@ -129,3 +134,4 @@ function saveOptions(e) {
     document.getElementById("popup-dblclick-key-ctrl").textContent = KEY_COMMAND;
     document.getElementById("popup-dblclick-key-ctrl").value = KEY_META;
   }
+
