@@ -40,6 +40,6 @@
 
   "permissions": [
     "storage",
-    "https://www.google.com/"
-  ]
+    "https://www.google.com/",
+    "https://*.slack.com/"]
 }
