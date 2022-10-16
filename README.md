@@ -11,3 +11,8 @@ Extension is available for [Google Chrome](https://chrome.google.com/webstore/de
 If you find this Extension helpful, consider supporting me:
 
 <a href="https://www.buymeacoffee.com/meetDeveloper"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=meetDeveloper&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>
+
+# Evan
+
+- I add the feature in which a user can send a slack message if a user saves their auth token and channel ID in this extension option.
+- Channel ID is a unique key that slack provides.
